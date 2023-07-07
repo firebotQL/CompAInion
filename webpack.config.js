@@ -45,7 +45,7 @@ const extensionConfig = {
 };
 
 const reactConfig = {
-  entry: "./react-chrome-app/src/index.tsx",
+  entry: "./ui/src/index.tsx",
   mode,
   module: {
     rules: [
