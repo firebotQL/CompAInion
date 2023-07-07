@@ -40,7 +40,7 @@ function Chat() {
       setIsLoading(true);
 
       const requestBody = JSON.stringify({ message: message });
-      const response = await fetch("http://localhost:3000", {
+      const response = await fetch("https://compainion-server.vercel.app", {
         method: "POST",
         body: requestBody,
         headers: { "Content-Type": "application/json" },
