@@ -62,9 +62,12 @@ const reactConfig = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-        exclude: /node_modules/,
+        test: /\.css$/i,
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          "postcss-loader",
+        ],
       },
       {
         test: /\.svg$/,
@@ -75,6 +78,9 @@ const reactConfig = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@": path.resolve(__dirname, "ui/"),
+    },
   },
   output: {
     filename: "content.js",

@@ -1,3 +1,15 @@
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import "./Chat.component.css";
 
@@ -17,7 +29,7 @@ function Chat() {
     setMessage(event.target.value);
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       handleSend();
     }
@@ -43,7 +55,10 @@ function Chat() {
       const response = await fetch("https://compainion-server.vercel.app", {
         method: "POST",
         body: requestBody,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "",
+        },
       });
 
       const responseBody = await response.json();
@@ -78,36 +93,84 @@ function Chat() {
   }, [chatHistory]);
 
   return (
-    <div className="chat-container" ref={chatContainerRef}>
-      {chatHistory.map((message, index) => (
-        <div
-          key={index}
-          className={
-            message.source === "User"
-              ? "chat-user-message message-box"
-              : "chat-api-message message-box"
-          }
-        >
-          <p>{message.content || message.text}</p>
+    <div>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">CompAInion</Button>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Welcome to CompAInion</SheetTitle>
+            <SheetDescription>
+              Please feel free to ask me anything!
+            </SheetDescription>
+          </SheetHeader>
+          <div className="grid gap-4 py-4">
+            {chatHistory.map((message, index) => (
+              <div
+                key={index}
+                className={
+                  message.source === "User"
+                    ? "chat-user-message message-box"
+                    : "chat-api-message message-box"
+                }
+              >
+                <p>{message.content || message.text}</p>
+              </div>
+            ))}
+            {!isLoading && (
+              <Textarea
+                placeholder="Type your message here."
+                value={message}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+              />
+            )}
+            {isLoading && <Textarea disabled>Loading...</Textarea>}
+          </div>
+          <SheetFooter>
+            <Button onClick={handleSend} disabled={isLoading}>
+              {isLoading && (
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Send
+            </Button>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+      {/* <div className="chat-container" ref={chatContainerRef}>
+        {chatHistory.map((message, index) => (
+          <div
+            key={index}
+            className={
+              message.source === "User"
+                ? "chat-user-message message-box"
+                : "chat-api-message message-box"
+            }
+          >
+            <p>{message.content || message.text}</p>
+          </div>
+        ))}
+        <div className="input-container">
+          {!isLoading && (
+            <Textarea
+              placeholder="Type your message here."
+              value={message}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+          )}
+          {!isLoading && <Button onClick={handleSend}>Button</Button>}
+
+          {isLoading && <Textarea disabled>Loading...</Textarea>}
+          {isLoading && (
+            <Button disabled>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          )}
         </div>
-      ))}
-      <div className="input-container">
-        <input
-          type="text"
-          value={message}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          className="chat-input"
-          disabled={isLoading}
-        />
-        <button
-          className="send-button"
-          onClick={handleSend}
-          disabled={isLoading}
-        >
-          Send
-        </button>
-      </div>
+      </div> */}
     </div>
   );
 }
