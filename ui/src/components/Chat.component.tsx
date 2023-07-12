@@ -8,42 +8,30 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Textarea } from "@/components/ui/textarea";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import React, { useEffect, useRef, useState } from "react";
+import { IconDots } from "@tabler/icons-react";
+import { useEffect, useRef, useState } from "react";
+import { ChatMessage } from "../types/chat-message.type";
 import "./Chat.component.css";
+import { ChatInputBox } from "./ChatInput.component";
+import { ConversationArea } from "./ChatMessageArea.component";
+
+const aiURL = "";
+const aiAuthorization = "";
 
 function Chat() {
-  const [message, setMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState<
-    Array<{ source: string; text?: string; content?: string }>
-  >([]);
-
   const [isLoading, setIsLoading] = useState(false);
+  const [chatHistory, setChatHistory] = useState<Array<ChatMessage>>([]);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleInputChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setMessage(event.target.value);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      handleSend();
-    }
-  };
-
-  const handleSend = async () => {
-    if (message === "" || message === undefined) return;
-
-    setMessage("");
-
+  const askAI = async (message: string) => {
     const updatedChatHistory = [
       ...chatHistory,
-      { source: "User", text: message },
-      { source: "API", content: "..." },
+      { source: "user", text: message } as ChatMessage,
+      {
+        source: "ai",
+        content: <IconDots className="animate-pulse" />,
+      } as ChatMessage,
     ];
 
     setChatHistory(updatedChatHistory);
@@ -52,12 +40,12 @@ function Chat() {
       setIsLoading(true);
 
       const requestBody = JSON.stringify({ message: message });
-      const response = await fetch("https://compainion-server.vercel.app", {
+      const response = await fetch(aiURL, {
         method: "POST",
         body: requestBody,
         headers: {
           "Content-Type": "application/json",
-          Authorization: "",
+          Authorization: aiAuthorization,
         },
       });
 
@@ -68,7 +56,7 @@ function Chat() {
       updatedChatHistoryWithResponse[
         updatedChatHistoryWithResponse.length - 1
       ] = {
-        source: "API",
+        source: "ai",
         text: apiResponse,
       };
 
@@ -98,79 +86,27 @@ function Chat() {
         <SheetTrigger asChild>
           <Button variant="outline">CompAInion</Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="sm:max-w-none lg:w-1/3 sm:w-[540px]">
           <SheetHeader>
-            <SheetTitle>Welcome to CompAInion</SheetTitle>
+            <SheetTitle className="items-center">
+              Welcome to CompAInion
+            </SheetTitle>
             <SheetDescription>
-              Please feel free to ask me anything!
+              {chatHistory?.length > 0
+                ? "Chat history: "
+                : "Please feel free to ask me anything!"}
             </SheetDescription>
           </SheetHeader>
-          <div className="grid gap-4 py-4">
-            {chatHistory.map((message, index) => (
-              <div
-                key={index}
-                className={
-                  message.source === "User"
-                    ? "chat-user-message message-box"
-                    : "chat-api-message message-box"
-                }
-              >
-                <p>{message.content || message.text}</p>
-              </div>
-            ))}
-            {!isLoading && (
-              <Textarea
-                placeholder="Type your message here."
-                value={message}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-              />
-            )}
-            {isLoading && <Textarea disabled>Loading...</Textarea>}
-          </div>
+          {chatHistory?.length > 0 && (
+            <ConversationArea messages={chatHistory} />
+          )}
           <SheetFooter>
-            <Button onClick={handleSend} disabled={isLoading}>
-              {isLoading && (
-                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Send
-            </Button>
+            <div className="mt-4 sm:mt-8 bottom-[56px] left-0 w-full">
+              <ChatInputBox isLoading={isLoading} askAI={askAI} />
+            </div>
           </SheetFooter>
         </SheetContent>
       </Sheet>
-      {/* <div className="chat-container" ref={chatContainerRef}>
-        {chatHistory.map((message, index) => (
-          <div
-            key={index}
-            className={
-              message.source === "User"
-                ? "chat-user-message message-box"
-                : "chat-api-message message-box"
-            }
-          >
-            <p>{message.content || message.text}</p>
-          </div>
-        ))}
-        <div className="input-container">
-          {!isLoading && (
-            <Textarea
-              placeholder="Type your message here."
-              value={message}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-          )}
-          {!isLoading && <Button onClick={handleSend}>Button</Button>}
-
-          {isLoading && <Textarea disabled>Loading...</Textarea>}
-          {isLoading && (
-            <Button disabled>
-              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-              Please wait
-            </Button>
-          )}
-        </div>
-      </div> */}
     </div>
   );
 }
