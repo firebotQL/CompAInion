@@ -1,18 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { ChatRequestOptions } from "ai";
 import { FC, useState } from "react";
 
 interface ChatInputProps {
   isLoading: boolean;
   limit?: number;
-  askAI: (message: string) => void;
+  handleChatInputChange: (
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLInputElement>
+  ) => void;
+  handleChatSubmit: (
+    e: React.FormEvent<HTMLFormElement>,
+    chatRequestOptions?: ChatRequestOptions | undefined
+  ) => void;
 }
 
 export const ChatInputBox: FC<ChatInputProps> = ({
   isLoading,
   limit = 4000,
-  askAI,
+  handleChatInputChange,
+  handleChatSubmit,
 }) => {
   // 4000 characters/tokens?
   const [message, setMessage] = useState<string>("");
@@ -26,6 +36,7 @@ export const ChatInputBox: FC<ChatInputProps> = ({
       return;
     }
     setMessage(message);
+    handleChatInputChange(event);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -43,7 +54,28 @@ export const ChatInputBox: FC<ChatInputProps> = ({
 
     setMessage("");
 
-    askAI(message);
+    const event = generateSyntheticFormEventWithInput(message);
+
+    handleChatSubmit(event as React.FormEvent<HTMLFormElement>);
+  };
+
+  const generateSyntheticFormEventWithInput = (input: string) => {
+    // Create a temporary form and input elements
+    const tempForm = document.createElement("form");
+    const tempInput = document.createElement("input");
+
+    // Set the value of the temporary input element to your input value
+    tempInput.value = input;
+
+    // Append the temporary input to the temporary form
+    tempForm.appendChild(tempInput);
+
+    // Create a synthetic event
+    return {
+      currentTarget: tempForm,
+      preventDefault: () => {},
+      stopPropagation: () => {},
+    };
   };
 
   return (

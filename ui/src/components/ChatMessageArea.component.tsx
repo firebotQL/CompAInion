@@ -1,9 +1,9 @@
+import { Message } from "ai";
 import { FC } from "react";
-import { ChatMessage } from "../types/chat-message.type";
 import { ChatBlob } from "./ChatBlob.component";
 
 interface ConversationAreaProps {
-  messages: ChatMessage[];
+  messages: Message[];
 }
 
 export const ConversationArea: FC<ConversationAreaProps> = ({

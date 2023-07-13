@@ -8,9 +8,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { IconDots } from "@tabler/icons-react";
-import { useEffect, useRef, useState } from "react";
-import { ChatMessage } from "../types/chat-message.type";
+import { useChat } from "ai/react";
+import { useState } from "react";
 import "./Chat.component.css";
 import { ChatInputBox } from "./ChatInput.component";
 import { ConversationArea } from "./ChatMessageArea.component";
@@ -20,65 +19,27 @@ const aiAuthorization = "";
 
 function Chat() {
   const [isLoading, setIsLoading] = useState(false);
-  const [chatHistory, setChatHistory] = useState<Array<ChatMessage>>([]);
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    api: aiURL,
+    headers: { Authorization: aiAuthorization },
+  });
 
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  // user/assistant
+  // TODO:
+  // - add a loading indicator for the assistant setIsLoading(true);
 
-  const askAI = async (message: string) => {
-    const updatedChatHistory = [
-      ...chatHistory,
-      { source: "user", text: message } as ChatMessage,
-      {
-        source: "ai",
-        content: <IconDots className="animate-pulse" />,
-      } as ChatMessage,
-    ];
+  // const chatContainerRef = useRef<HTMLDivElement>(null);
 
-    setChatHistory(updatedChatHistory);
+  // const scrollToBottom = () => {
+  //   if (chatContainerRef.current) {
+  //     chatContainerRef.current.scrollTop =
+  //       chatContainerRef.current.scrollHeight;
+  //   }
+  // };
 
-    try {
-      setIsLoading(true);
-
-      const requestBody = JSON.stringify({ message: message });
-      const response = await fetch(aiURL, {
-        method: "POST",
-        body: requestBody,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: aiAuthorization,
-        },
-      });
-
-      const responseBody = await response.json();
-      const apiResponse = responseBody.reply;
-
-      const updatedChatHistoryWithResponse = [...updatedChatHistory];
-      updatedChatHistoryWithResponse[
-        updatedChatHistoryWithResponse.length - 1
-      ] = {
-        source: "ai",
-        text: apiResponse,
-      };
-
-      setChatHistory(updatedChatHistoryWithResponse);
-      scrollToBottom();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatHistory]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [chatHistory]);
 
   return (
     <div>
@@ -92,17 +53,19 @@ function Chat() {
               Welcome to CompAInion
             </SheetTitle>
             <SheetDescription>
-              {chatHistory?.length > 0
+              {messages?.length > 0
                 ? "Chat history: "
                 : "Please feel free to ask me anything!"}
             </SheetDescription>
           </SheetHeader>
-          {chatHistory?.length > 0 && (
-            <ConversationArea messages={chatHistory} />
-          )}
+          {messages?.length > 0 && <ConversationArea messages={messages} />}
           <SheetFooter>
             <div className="mt-4 sm:mt-8 bottom-[56px] left-0 w-full">
-              <ChatInputBox isLoading={isLoading} askAI={askAI} />
+              <ChatInputBox
+                isLoading={isLoading}
+                handleChatInputChange={handleInputChange}
+                handleChatSubmit={handleSubmit}
+              />
             </div>
           </SheetFooter>
         </SheetContent>

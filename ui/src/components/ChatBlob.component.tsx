@@ -4,7 +4,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
 
-import { ChatMessage } from "../types/chat-message.type";
+import { Message } from "ai";
 
 type CodeProps = {
   inline?: boolean;
@@ -29,7 +29,7 @@ const CodeBlock: Components = {
 };
 
 interface ChatMessageProps {
-  message: ChatMessage;
+  message: Message;
 }
 
 export const ChatBlob: FC<ChatMessageProps> = ({
@@ -37,7 +37,7 @@ export const ChatBlob: FC<ChatMessageProps> = ({
 }: ChatMessageProps) => {
   let colStyle = "items-start";
   let messageStyle = "bg-neutral-200 text-neutral-900";
-  if (message.source === "user") {
+  if (message.role === "user") {
     colStyle = "items-end";
     messageStyle = "bg-blue-500 text-white";
   }
@@ -48,13 +48,9 @@ export const ChatBlob: FC<ChatMessageProps> = ({
         style={{ overflowWrap: "anywhere" }}
       >
         <div>
-          {message.text ? (
-            <ReactMarkdown components={CodeBlock} rehypePlugins={[rehypeRaw]}>
-              {message.text}
-            </ReactMarkdown>
-          ) : (
-            message.content
-          )}
+          <ReactMarkdown components={CodeBlock} rehypePlugins={[rehypeRaw]}>
+            {message.content}
+          </ReactMarkdown>
         </div>
       </div>
     </div>
