@@ -4,14 +4,14 @@ import App from "./App";
 import "./index.css";
 
 const rootElement = document.createElement("div");
-rootElement.id = "react-chrome-app";
+rootElement.id = "companion-content";
 
 const globalStyles = document.createElement("style");
 globalStyles.innerHTML = `
   #${rootElement.id} {
     position: fixed;
-    bottom: 20px;
-    right: 20px
+    bottom: 0px;
+    right: 0px
     z-index: 9999;
   }
 `;

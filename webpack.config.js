@@ -70,8 +70,15 @@ const reactConfig = {
         ],
       },
       {
-        test: /\.svg$/,
-        use: ["file-loader"],
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "assets/[name].[ext]",
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
     ],
@@ -85,8 +92,62 @@ const reactConfig = {
   output: {
     filename: "content.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "",
   },
   plugins: [...getHtmlPlugins(["index"])],
+};
+
+const reactPopConfig = {
+  entry: "./ui-popup/src/index.tsx",
+  mode: "development",
+  devtool: "inline-source-map",
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: "ts-loader",
+            options: {
+              compilerOptions: { noEmit: false },
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          "postcss-loader",
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: ["file-loader"],
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@": path.resolve(__dirname, "ui-popup/"),
+    },
+  },
+  output: {
+    filename: "popup.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  plugins: [
+    new HTMLPlugin({
+      title: "React Popup",
+      template: "./ui-popup/public/index.html", // load the public/index.html file as the template
+      filename: "popup.html", // output HTML in dist folder
+      inject: "body", // inject scripts into body
+    }),
+  ],
 };
 
 function getHtmlPlugins(chunks) {
@@ -100,7 +161,7 @@ function getHtmlPlugins(chunks) {
   );
 }
 
-const configurations = [extensionConfig, reactConfig];
+const configurations = [extensionConfig, reactConfig, reactPopConfig];
 
 const generateConfig = (configurations) => {
   return configurations.map((config) => ({

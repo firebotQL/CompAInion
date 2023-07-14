@@ -9,19 +9,36 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useChat } from "ai/react";
-import { useState } from "react";
-import "./Chat.component.css";
+import { useEffect, useState } from "react";
+
+import companionButtonImg from "../assets/compainion-button.png";
 import { ChatInputBox } from "./ChatInput.component";
 import { ConversationArea } from "./ChatMessageArea.component";
 
-const aiURL = "";
-const aiAuthorization = "";
-
 function Chat() {
+  const [serverUrl, setServerUrl] = useState("");
+  const [authorizationHeader, setAuthHeader] = useState("");
+
+  useEffect(() => {
+    chrome.storage.sync.get(
+      ["compainion-serverUrl", "compainion-authHeader"],
+      (result) => {
+        if (result["compainion-serverUrl"]) {
+          setServerUrl(result["compainion-serverUrl"]);
+        }
+        if (result["compainion-authHeader"]) {
+          setAuthHeader(result["compainion-authHeader"]);
+        }
+      }
+    );
+  }, []);
+
+  console.log("aiURL", serverUrl);
+  console.log("aiAuthorization", authorizationHeader);
   const [isLoading, setIsLoading] = useState(false);
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: aiURL,
-    headers: { Authorization: aiAuthorization },
+    api: serverUrl,
+    headers: { Authorization: authorizationHeader },
   });
 
   // user/assistant
@@ -45,9 +62,15 @@ function Chat() {
     <div>
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline">CompAInion</Button>
+          <Button variant="outline" className="ml-4 mb-4 w-8 h-8">
+            <img
+              className="h-auto max-w-max rounded-lg" // TODO: Fix height of img as it's clashing with default
+              alt="CompAInion"
+              src={chrome.runtime.getURL(companionButtonImg)}
+            />
+          </Button>
         </SheetTrigger>
-        <SheetContent className="sm:max-w-none lg:w-1/3 sm:w-[540px]">
+        <SheetContent className="sm:max-w-none lg:w-1/3 sm:w-[540px] overflow-auto">
           <SheetHeader>
             <SheetTitle className="items-center">
               Welcome to CompAInion
