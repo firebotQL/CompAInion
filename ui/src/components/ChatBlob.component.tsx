@@ -13,7 +13,7 @@ type CodeProps = {
 };
 
 const CodeBlock: Components = {
-  code: ({ inline, className, children }: CodeProps) => {
+  code: ({ inline, className, children }) => {
     const match = /language-(\w+)/.exec(className || "");
     return !inline && match ? (
       <SyntaxHighlighter
@@ -44,13 +44,16 @@ export const ChatBlob: FC<ChatMessageProps> = ({
   return (
     <div className={`flex flex-col ${colStyle}`}>
       <div
-        className={`flex items-center ${messageStyle} rounded-2xl px-3 py-2 max-w-[90%] whitespace-pre-wrap`}
+        className={`flex items-center ${messageStyle} rounded-2xl px-3 py-2 max-w-[100%] whitespace-pre-wrap`}
         style={{ overflowWrap: "anywhere" }}
       >
-        <div>
-          <ReactMarkdown components={CodeBlock} rehypePlugins={[rehypeRaw]}>
-            {message.content}
-          </ReactMarkdown>
+        <div className="overflow-auto">
+          {message.role !== "user" && (
+            <ReactMarkdown components={CodeBlock} rehypePlugins={[rehypeRaw]}>
+              {message.content}
+            </ReactMarkdown>
+          )}
+          {message.role === "user" && message.content}
         </div>
       </div>
     </div>

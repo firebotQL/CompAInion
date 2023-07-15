@@ -25,7 +25,7 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "pointer-events-none fixed inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -62,7 +62,7 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => (
   <SheetPortal>
-    {/* {<SheetOverlay />} */}{" "}
+    {/* <SheetOverlay /> */}
     {/* TODO: Needs to be addressed/fixed with parameters passed, tepmorary solution from: https://github.com/shadcn/ui/issues/837 */}
     <SheetPrimitive.Content
       ref={ref}

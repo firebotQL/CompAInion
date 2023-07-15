@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useChat } from "ai/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import companionButtonImg from "../assets/compainion-button.png";
 import { ChatInputBox } from "./ChatInput.component";
@@ -18,6 +18,13 @@ import { ConversationArea } from "./ChatMessageArea.component";
 function Chat() {
   const [serverUrl, setServerUrl] = useState("");
   const [authorizationHeader, setAuthHeader] = useState("");
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  });
 
   useEffect(() => {
     chrome.storage.sync.get(
@@ -33,8 +40,6 @@ function Chat() {
     );
   }, []);
 
-  console.log("aiURL", serverUrl);
-  console.log("aiAuthorization", authorizationHeader);
   const [isLoading, setIsLoading] = useState(false);
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: serverUrl,
@@ -45,22 +50,9 @@ function Chat() {
   // TODO:
   // - add a loading indicator for the assistant setIsLoading(true);
 
-  // const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  // const scrollToBottom = () => {
-  //   if (chatContainerRef.current) {
-  //     chatContainerRef.current.scrollTop =
-  //       chatContainerRef.current.scrollHeight;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [chatHistory]);
-
   return (
     <div>
-      <Sheet>
+      <Sheet modal={false}>
         <SheetTrigger asChild>
           <Button variant="outline" className="ml-4 mb-4 w-8 h-8">
             <img
@@ -70,7 +62,11 @@ function Chat() {
             />
           </Button>
         </SheetTrigger>
-        <SheetContent className="sm:max-w-none lg:w-1/3 sm:w-[540px] overflow-auto">
+        <SheetContent
+          className="sm:max-w-none lg:w-1/3 sm:w-[540px] overflow-auto"
+          onInteractOutside={(event) => event.preventDefault()}
+          ref={scrollRef}
+        >
           <SheetHeader>
             <SheetTitle className="items-center">
               Welcome to CompAInion

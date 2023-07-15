@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ChatRequestOptions } from "ai";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface ChatInputProps {
   isLoading: boolean;
@@ -27,6 +27,47 @@ export const ChatInputBox: FC<ChatInputProps> = ({
   // 4000 characters/tokens?
   const [message, setMessage] = useState<string>("");
 
+  useEffect(() => {
+    // Function to handle changes in chrome storage
+    const handleChange = (changes: {
+      [key: string]: chrome.storage.StorageChange;
+    }) => {
+      if (changes["selectedUseText"]) {
+        setMessage((prevValue) => {
+          if (prevValue) {
+            return `${prevValue}\n${changes["selectedUseText"].newValue}`;
+          }
+          return changes["selectedUseText"].newValue;
+        });
+      }
+    };
+
+    // Get initial value from chrome storage
+    chrome.storage.sync.get("selectedUseText", (result) => {
+      setMessage((prevValue) => {
+        if (prevValue) {
+          return `${prevValue}\n${result["selectedUseText"]}`;
+        }
+        return result["selectedUseText"];
+      });
+    });
+
+    // Add event listener for chrome storage changes
+    chrome.storage.onChanged.addListener(handleChange);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      chrome.storage.onChanged.removeListener(handleChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const pseudoEvent = {
+      target: { value: message },
+    } as React.ChangeEvent<HTMLTextAreaElement>; // Or HTMLTextAreaElement
+    handleChatInputChange(pseudoEvent);
+  }, [handleChatInputChange, message]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const {
       target: { value: message },
@@ -36,14 +77,6 @@ export const ChatInputBox: FC<ChatInputProps> = ({
       return;
     }
     setMessage(message);
-    handleChatInputChange(event);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSend();
-    }
   };
 
   const handleSend = async () => {
@@ -86,7 +119,6 @@ export const ChatInputBox: FC<ChatInputProps> = ({
           placeholder="Type your message here."
           value={message}
           onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
         />
       )}
       {isLoading && (
