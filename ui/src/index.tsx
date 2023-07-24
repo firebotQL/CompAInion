@@ -21,7 +21,6 @@ globalStyles.innerHTML = `
   #${rootElement.id} {
     position: fixed;
     bottom: 0px;
-    right: 0px
     z-index: 9999;
   }
 `;
