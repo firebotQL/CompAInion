@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ReloadIcon } from "@radix-ui/react-icons";
+import { ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
 import { ChatRequestOptions } from "ai";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface ChatInputProps {
   isLoading: boolean;
@@ -26,6 +26,7 @@ export const ChatInputBox: FC<ChatInputProps> = ({
 }) => {
   // 4000 characters/tokens?
   const [message, setMessage] = useState<string>("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null); // Create a ref
 
   useEffect(() => {
     // Function to handle changes in chrome storage
@@ -61,11 +62,19 @@ export const ChatInputBox: FC<ChatInputProps> = ({
     };
   }, []);
 
+  const scrollTextAreaToBottom = () => {
+    if (textareaRef.current) {
+      textareaRef.current.scrollTop = textareaRef.current.scrollHeight; // Scroll to the bottom
+    }
+  };
+
   useEffect(() => {
     const pseudoEvent = {
       target: { value: message },
     } as React.ChangeEvent<HTMLTextAreaElement>; // Or HTMLTextAreaElement
     handleChatInputChange(pseudoEvent);
+
+    scrollTextAreaToBottom();
   }, [handleChatInputChange, message]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -77,6 +86,11 @@ export const ChatInputBox: FC<ChatInputProps> = ({
       return;
     }
     setMessage(message);
+  };
+
+  const clearMessage = () => {
+    if (message === "" || message === undefined) return;
+    setMessage("");
   };
 
   const handleSend = async () => {
@@ -115,6 +129,7 @@ export const ChatInputBox: FC<ChatInputProps> = ({
     <div className="flex w-full">
       {!isLoading && (
         <Textarea
+          ref={textareaRef}
           className="flex-grow mr-2"
           placeholder="Type your message here."
           value={message}
@@ -126,14 +141,24 @@ export const ChatInputBox: FC<ChatInputProps> = ({
           Loading...
         </Textarea>
       )}
-      <Button
-        onClick={handleSend}
-        className="flex-none w-1/10"
-        disabled={isLoading}
-      >
-        {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-        Send
-      </Button>
+      <div className="w-1/6">
+        <Button
+          onClick={handleSend}
+          className="flex-none w-full mb-2"
+          disabled={isLoading}
+        >
+          {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+          Send
+        </Button>
+        <Button
+          onClick={clearMessage}
+          className="flex-none w-full"
+          disabled={isLoading || !message}
+        >
+          {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+          <TrashIcon className="mr-2 h-4 w-4" /> Clear
+        </Button>
+      </div>
     </div>
   );
 };

@@ -51,45 +51,43 @@ function Chat() {
   // - add a loading indicator for the assistant setIsLoading(true);
 
   return (
-    <div>
-      <Sheet modal={false}>
-        <SheetTrigger asChild>
-          <Button variant="outline" className="ml-4 mb-4 w-8 h-8">
-            <img
-              className="h-auto max-w-max rounded-lg" // TODO: Fix height of img as it's clashing with default
-              alt="CompAInion"
-              src={chrome.runtime.getURL(companionButtonImg)}
+    <Sheet modal={false}>
+      <SheetTrigger asChild>
+        <Button variant="outline" className="ml-4 mb-4 w-8 h-8">
+          <img
+            className="h-auto max-w-max rounded-lg" // TODO: Fix height of img as it's clashing with default
+            alt="CompAInion"
+            src={chrome.runtime.getURL(companionButtonImg)}
+          />
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        className="sm:max-w-none lg:w-1/3 sm:w-[320px] overflow-auto"
+        onInteractOutside={(event) => event.preventDefault()}
+        ref={scrollRef}
+      >
+        <SheetHeader>
+          <SheetTitle className="items-center">
+            Welcome to CompAInion
+          </SheetTitle>
+          <SheetDescription>
+            {messages?.length > 0
+              ? "Chat history: "
+              : "Please feel free to ask me anything!"}
+          </SheetDescription>
+        </SheetHeader>
+        {messages?.length > 0 && <ConversationArea messages={messages} />}
+        <SheetFooter>
+          <div className="mt-4 sm:mt-8 bottom-[56px] left-0 w-full">
+            <ChatInputBox
+              isLoading={isLoading}
+              handleChatInputChange={handleInputChange}
+              handleChatSubmit={handleSubmit}
             />
-          </Button>
-        </SheetTrigger>
-        <SheetContent
-          className="sm:max-w-none lg:w-1/3 sm:w-[540px] overflow-auto"
-          onInteractOutside={(event) => event.preventDefault()}
-          ref={scrollRef}
-        >
-          <SheetHeader>
-            <SheetTitle className="items-center">
-              Welcome to CompAInion
-            </SheetTitle>
-            <SheetDescription>
-              {messages?.length > 0
-                ? "Chat history: "
-                : "Please feel free to ask me anything!"}
-            </SheetDescription>
-          </SheetHeader>
-          {messages?.length > 0 && <ConversationArea messages={messages} />}
-          <SheetFooter>
-            <div className="mt-4 sm:mt-8 bottom-[56px] left-0 w-full">
-              <ChatInputBox
-                isLoading={isLoading}
-                handleChatInputChange={handleInputChange}
-                handleChatSubmit={handleSubmit}
-              />
-            </div>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-    </div>
+          </div>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
 

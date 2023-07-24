@@ -3,12 +3,11 @@ import ContextMenu from "./components/ContextMenu.component";
 
 function App() {
   return (
-    <div>
-      <header>
-        <ContextMenu />
-        <Chat />
-      </header>
-    </div>
+    <>
+      <ContextMenu />
+      <Chat />
+      <div className="companion-content"></div>
+    </>
   );
 }
 

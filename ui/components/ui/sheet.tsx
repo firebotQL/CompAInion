@@ -61,7 +61,14 @@ const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
+  <SheetPortal
+    container={(() => {
+      const test = document
+        .querySelector("#companion-root")
+        ?.shadowRoot?.querySelector(".companion-content") as HTMLElement;
+      return test;
+    })()}
+  >
     {/* <SheetOverlay /> */}
     {/* TODO: Needs to be addressed/fixed with parameters passed, tepmorary solution from: https://github.com/shadcn/ui/issues/837 */}
     <SheetPrimitive.Content

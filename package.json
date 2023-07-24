@@ -6,7 +6,8 @@
     "name": "Viaceslavas Duk"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack"
+    "build": "NODE_ENV=production webpack",
+    "build:dev": "NODE_ENV=development webpack"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.239",

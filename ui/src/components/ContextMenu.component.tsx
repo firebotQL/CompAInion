@@ -14,15 +14,34 @@ const ContextMenu: React.FC = () => {
 
   useEffect(() => {
     function handleMouseUp(e: MouseEvent) {
-      const text = window.getSelection()?.toString().trim() || "";
+      const selection = window.getSelection();
+      if (!selection) {
+        console.log("No selection object");
+        return;
+      }
+
+      const text = selection.toString().trim();
       setSelectedText(text);
+
       if (text) {
-        setButtonStyle({
-          display: "block",
-          position: "fixed",
-          top: `${e.pageY}px`,
-          left: `${e.pageX}px`,
-        });
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          const rects = range.getClientRects();
+          const rect = rects[rects.length - 1]; // Consider the last rectangle
+
+          console.log("rect", rect); // Debugging
+
+          setButtonStyle({
+            display: "block",
+            position: "fixed",
+            top: `${rect.bottom}px`,
+            left: `${rect.right}px`,
+          });
+        } else {
+          console.log("No ranges in selection");
+        }
+      } else {
+        console.log("No selected text");
       }
     }
 

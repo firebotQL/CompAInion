@@ -1,15 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class"],
-  content: ["./ui/components/**/*.{ts,tsx}", "./ui/src/**/*.{ts,tsx}"],
+import { defineConfig } from "@twind/core";
+import presetAutoprefix from "@twind/preset-autoprefix";
+import presetTailwind from "@twind/preset-tailwind";
+
+export default defineConfig({
+  presets: [presetAutoprefix(), presetTailwind(/* options */)],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -51,6 +46,10 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
@@ -61,11 +60,14 @@ module.exports = {
           to: { height: 0 },
         },
       },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+      container: {
+        center: true,
+        padding: "2rem",
+        screens: {
+          "2xl": "1400px",
+        },
       },
     },
   },
-  plugins: [require("tailwindcss-animate")], // TODO: Need to track this: https://github.com/tw-in-js/twind/discussions/478
-};
+  plugins: {},
+});

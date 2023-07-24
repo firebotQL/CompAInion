@@ -47,6 +47,7 @@ const extensionConfig = {
 const reactConfig = {
   entry: "./ui/src/index.tsx",
   mode,
+  devtool: "inline-source-map", // TODO: Remove this for production!
   module: {
     rules: [
       {
@@ -64,9 +65,11 @@ const reactConfig = {
       {
         test: /\.css$/i,
         use: [
-          "style-loader",
+          {
+            loader: "style-loader",
+          },
           { loader: "css-loader", options: { importLoaders: 1 } },
-          "postcss-loader",
+          // "postcss-loader", // no longer needed with Twind
         ],
       },
       {
@@ -99,7 +102,7 @@ const reactConfig = {
 
 const reactPopConfig = {
   entry: "./ui-popup/src/index.tsx",
-  mode: "development",
+  mode,
   devtool: "inline-source-map",
   module: {
     rules: [
@@ -118,8 +121,20 @@ const reactPopConfig = {
       {
         test: /\.css$/i,
         use: [
-          "style-loader",
-          { loader: "css-loader", options: { importLoaders: 1 } },
+          {
+            loader: "style-loader",
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+            },
+          },
           "postcss-loader",
         ],
       },

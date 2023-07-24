@@ -44,7 +44,7 @@ export const ChatBlob: FC<ChatMessageProps> = ({
   return (
     <div className={`flex flex-col ${colStyle}`}>
       <div
-        className={`flex items-center ${messageStyle} rounded-2xl px-3 py-2 max-w-[100%] whitespace-pre-wrap`}
+        className={`flex items-center ${messageStyle} rounded-xl px-3 py-2 max-w-[100%] whitespace-pre-wrap`}
         style={{ overflowWrap: "anywhere" }}
       >
         <div className="overflow-auto">
