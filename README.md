@@ -1,118 +1,103 @@
-# CompAInion
+<div align="center">
+  <img src="./chrome-extension/core/images/favicon32.png" alt="Icon Image">
+  <h1>CompAInion: Your ChatGPT Assistant</h1>
+</div>
 
-CompAInion is an open-source project that comprises a ChatGPT Chrome Extension - Chat UI. The extension allows you to leverage the capabilities of the ChatGPT model on any website and use it in Chat/Messaging manner to prompt anything you see. This repository also includes a backend service built with Next.js Edge Functions that streamlines the ChatGPT response, deployed on Vercel.
+Welcome to CompAInion, my contribution to the open-source community. This project is a practical implementation of a Chrome Extension, designed to seamlessly integrate ChatGPT into your day-to-day browsing experience.
 
-## Contents
+The main feature of CompAInion is its intuitive chat interface that allows you to converse with ChatGPT in a manner as natural as chatting with a friend. The experience is further enriched with an additional feature that enables you to select any text on a webpage, which can then be directly included in your chat discussion via a context menu. This feature alleviates the need for manual copy-pasting and provides a seamless flow to your interactions.
 
-- [CompAInion](#compainion)
-  - [Contents](#contents)
-  - [Getting Started](#getting-started)
-  - [Project Structure](#project-structure)
-- [How to install and use the Chrome Extension](#how-to-install-and-use-the-chrome-extension)
-  - [Part 1: Preparing Your Project](#part-1-preparing-your-project)
-  - [Part 2: Installing the Extension in Chrome](#part-2-installing-the-extension-in-chrome)
-  - [Current Limitations](#current-limitations)
-  - [Contributions](#contributions)
-  - [Upcoming Tasks](#upcoming-tasks)
+On the front end I used React + TailwindCSS + ShadeCN + Twind + Shadow Dom to build the UI with some chrome extension specific code.
+
+On the backend, I decided to use Next.js + Edge Functions + Vercel AI SDK to build API which can be deployed to Vercel. This was the only solution with which I could overcome 10s timeout on Vercel as it's uses streaming and longer responses could be streamed back for longer than that.
+
+I hope CompAInion proves to be a useful tool in your browsing toolkit, enhancing your interactions and experiences online.
+
+**NOTE: Project is still in early stages, and many bugs needs weeding out, feel free to see some of them on the very bottom of this readme**
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Getting Started](#getting-started)
+- [Deploying the Backend Service](#deploying-the-backend-service)
+- [Understanding the Project Structure](#understanding-the-project-structure)
+- [Installing and Using the Chrome Extension](#installing-and-using-the-chrome-extension)
+  - [Preparing Your Project](#preparing-your-project)
+  - [Installing the Extension in Chrome](#installing-the-extension-in-chrome)
+- [Known Limitations](#known-limitations)
+- [Contributing to CompAInion](#contributing-to-compainion)
+- [Upcoming Tasks](#upcoming-tasks)
 
 ## Getting Started
 
-To use this extension, you'll need a ChatGPT API Key. Follow the instructions provided [here](https://beta.openai.com/docs/developer-quickstart/) to get the key.
+To make use of this extension, first ensure you have a ChatGPT API Key. If you don't have one, follow the instructions provided [here](https://beta.openai.com/docs/developer-quickstart/) to acquire it.
 
-To deploy your own instance of the backend service, click on the "Deploy to Vercel" button. Set the following environment variables:
+## Deploying the Backend Service
 
-- `PASSWORD`: Protects the endpoint and will be sent as an Authorization Header from the Chrome extension.
-- `OPENAI_API_KEY`: Your ChatGPT API Key.
+You can deploy your own instance of the backend service by clicking on the "Deploy to Vercel" button. Make sure to set the following environment variables:
 
-> **Note**: Currently, we only support the ChatGPT 3.5 model. We will add support for other models in the future as they become available.
+- `PASSWORD`: Protects the endpoint, and is sent as an Authorization Header from the Chrome extension.
+- `OPENAI_API_KEY`: Your unique ChatGPT API Key.
 
-## Project Structure
+<p align="center">
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FfirebotQL%2FCompAInion&env=PASSWORD,OPENAI_API_KEY&envDescription=Refer%20to%20them%20what%20they%20are%20from%20the%20README.md">
+    <img src="https://vercel.com/button" alt="Deploy with Vercel">
+  </a>
+</p>
 
-- `backend`: The deployable Next.js service on Vercel, used for utilizing Edge Functions.
-- `extension`: Contains the Chrome extension's core files, including the `manifest.json` configuration.
-- `ui`: A React app using Tailwind and ShadeCN for the chat-based system and a context menu for text selection on the page where it's loaded.
-- `ui-popup`: A popup for configuring your server URL and authorization password. These should come from the deployed 'backend' instance.
+## Understanding the Project Structure
 
-# How to install and use the Chrome Extension
+- `backend`: The deployable Next.js service hosted on Vercel, making use of Edge Functions to handle large response timeouts.
+- `chrome-extension/core`: Houses the core files for the Chrome extension, including the `manifest.json` configuration.
+- `chrome-extension/content`: A React app utilizing Tailwind and ShadeCN for chat functionalities and a context menu for text selection on loaded pages.
+- `chrome-extension/popup`: Provides a popup for configuring your server URL and authorization password. These should originate from the deployed 'backend' instance.
 
-This guide is divided into two parts:
+## Installing and Using the Chrome Extension
 
-1. How to prepare your project for the Chrome Extension.
-2. How to install the Extension into your Chrome browser.
+This process involves two key steps:
 
-## Part 1: Preparing Your Project
+1. **Preparing Your Project**
+2. **Installing the Extension in Chrome**
 
-1. **In the `ui` folder:**
+### Preparing Your Project
 
-   Open your terminal and navigate to the `ui` directory of your project.
-
-   Run the following command to install the necessary dependencies:
-
-   ```
-   yarn install
-   ```
-
-2. **In the `ui-popup` folder:**
-
-   Navigate to the `ui-popup` directory of your project.
-
-   Run the following command to install the necessary dependencies:
+1. Navigate to your project's root directory and execute the following command to install the necessary dependencies and build the Chrome extension:
 
    ```
-   yarn install
+   yarn install && yarn build:chrome
    ```
 
-3. **On the root of the project:**
+This action will create a `dist` folder, essential for the Chrome Extension.
 
-   Navigate back to the root directory of your project.
+### Installing the Extension in Chrome
 
-   Run the following commands to install any remaining dependencies and build the project:
+1. Open Chrome and navigate to `chrome://extensions/`. Enable 'Developer mode' from the top right corner.
 
-   ```
-   yarn install && yarn build
-   ```
+2. Click the 'Load unpacked' button and navigate to the `dist` folder in your project directory, which was created in the previous step. Click 'Select' and your Chrome Extension should now be installed and ready for use.
 
-   This will generate a `dist` folder, which contains the necessary files for the Chrome Extension.
-
-## Part 2: Installing the Extension in Chrome
-
-1. **Enable Developer Mode in Chrome:**
-
-   Open Google Chrome and navigate to `chrome://extensions/`.
-
-   In the top right corner, switch on 'Developer mode'.
-
-2. **Load Unpacked Extension:**
-
-   Click on the 'Load unpacked' button, which is available after you enable 'Developer mode'.
-
-   Navigate to and select the `dist` folder in your project directory. This folder was generated by the `yarn build` command you ran earlier.
-
-   Click 'Select', and the Chrome Extension should now be installed and ready to use.
-
-## Current Limitations
+## Known Limitations
 
 - Only supports ChatGPT 3.5 model.
-- No option to persist/load chat history.
-- No option to select predefined prompt templates.
-- No dark mode available.
+- Does not provide an option to preserve or load chat history.
+- Lacks an option for selecting predefined prompt templates.
+- Does not have a dark mode available.
 
-## Contributions
+## Contributing to CompAInion
 
-We welcome contributions to help improve CompAInion. Whether it's bug reports, feature requests, or pull requests - all are appreciated.
+Your contributions are invaluable to us! We welcome bug reports, feature requests, and pull requests to help us improve CompAInion.
 
 ## Upcoming Tasks
 
-Here are the tasks that we are currently working on:
+Here are some tasks on my radar that you might be interested in:
 
-1. Isolate CSS from extension and domain. (Working on a shadow-dom solution)
-2. Add option to select different ChatGPT models (not just 3.5).
-3. Add feature to persist/load chat history.
-   - 3.a. Option to switch between global or tab/website-specific history.
-4. Add features like summarizing, explain-like-I-am-5, and more.
-5. Add option to select predefined prompt templates.
-   - 5.a. Option to manually create or upload prompt templates.
-6. Implement dark mode.
-7. Add authentication to support task 3.
+1. Isolating CSS from the extension and the domain. As there is a bleed between current webpages and chrome extension atm. (Looking into complete a shadow-dom solution)
+2. Enabling the selection of different ChatGPT models (not restricted to 3.5).
+3. Implementing a feature to save and load chat history.
+   - 3.a. An option to switch between global or tab/website-specific history.
+4. Introducing features like summarizing, explaining in layman terms, and more for selected text/context menu.
+5. Providing an option to select predefined prompt templates.
+   - 5.a. An option to manually create or upload prompt templates.
+6. Adding a dark mode.
+7. Introducting authentication to support task 3.
 
-Feel free to pick any of these tasks and submit a pull request.
+Feel free to tackle any of these tasks and submit a pull request. Or raise any feedback in the issues section. I appreciate your collaboration!
