@@ -26,7 +26,7 @@ I hope CompAInion proves to be a useful tool in your browsing toolkit, enhancing
   - [Installing the Extension in Chrome](#installing-the-extension-in-chrome)
 - [Known Limitations](#known-limitations)
 - [Contributing to CompAInion](#contributing-to-compainion)
-- [Upcoming Tasks](#upcoming-tasks)
+- [Upcoming Tasks/Todos](#upcoming-taskstodos)
 
 ## Getting Started
 
@@ -86,9 +86,9 @@ This action will create a `dist` folder, essential for the Chrome Extension.
 
 Your contributions are invaluable to us! We welcome bug reports, feature requests, and pull requests to help us improve CompAInion.
 
-## Upcoming Tasks
+## Upcoming Tasks/Todos
 
-Here are some tasks on my radar that you might be interested in:
+Here are some tasks/todos on my radar that you might be interested in:
 
 1. Isolating CSS from the extension and the domain. As there is a bleed between current webpages and chrome extension atm. (Looking into complete a shadow-dom solution)
 2. Enabling the selection of different ChatGPT models (not restricted to 3.5).
@@ -99,5 +99,6 @@ Here are some tasks on my radar that you might be interested in:
    - 5.a. An option to manually create or upload prompt templates.
 6. Adding a dark mode.
 7. Introducting authentication to support task 3.
+8. Fix if any website waits on the input when modal is open/popped up it should disable all other inputs on the page.
 
 Feel free to tackle any of these tasks and submit a pull request. Or raise any feedback in the issues section. I appreciate your collaboration!
