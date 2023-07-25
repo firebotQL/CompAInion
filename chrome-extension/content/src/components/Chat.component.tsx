@@ -39,7 +39,6 @@ function Chat() {
         if (changes["compainion-authHeader"]) {
           setAuthHeader(changes["compainion-authHeader"].newValue);
         }
-        console.log("Setting notification to empty");
         setNotification("");
       }
     };
