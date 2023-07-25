@@ -17,7 +17,6 @@ const extensionConfig = {
   mode,
   entry: {
     background: `${chromeExtensionDir}/core/src/background.ts`,
-    popup: `${chromeExtensionDir}/core/src/popup.ts`,
   },
   module: {
     rules: [
@@ -46,7 +45,6 @@ const extensionConfig = {
           ),
           to: ".", // Relative to the webpack output path
         },
-        { from: `${chromeExtensionDir}/core/src/popup.html`, to: "." },
         { from: `${chromeExtensionDir}/core/images`, to: "images" },
       ],
     }),
@@ -78,7 +76,6 @@ const reactConfig = {
             loader: "style-loader",
           },
           { loader: "css-loader", options: { importLoaders: 1 } },
-          // "postcss-loader", // no longer needed with Twind
         ],
       },
       {
