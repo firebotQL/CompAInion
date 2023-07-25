@@ -32,8 +32,8 @@ const Popup = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-200">
-      <div className="bg-white rounded shadow-lg p-6">
+    <div className="flex flex-col justify-center items-center bg-gray-200">
+      <div className="bg-white rounded shadow-lg p-6 w-full">
         <h2 className="text-2xl mb-4">Settings</h2>
         <label className="block mb-2">Server URL:</label>
         <input

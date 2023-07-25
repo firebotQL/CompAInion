@@ -12,7 +12,7 @@ const additionalConfig = enableDevTools ? { devtool: "inline-source-map" } : {};
 
 const outputDir = path.resolve(__dirname, "dist");
 
-const extensionConfig = {
+const coreConfig = {
   name: "core",
   mode,
   entry: {
@@ -51,7 +51,7 @@ const extensionConfig = {
   ],
 };
 
-const reactConfig = {
+const contentConfig = {
   entry: `${chromeExtensionDir}/content/src/index.tsx`,
   mode,
   ...additionalConfig,
@@ -106,7 +106,7 @@ const reactConfig = {
   plugins: [...getHtmlPlugins(["index"])],
 };
 
-const reactPopConfig = {
+const popupConfig = {
   entry: `${chromeExtensionDir}/popup/src/index.tsx`,
   mode,
   ...additionalConfig,
@@ -182,7 +182,7 @@ function getHtmlPlugins(chunks) {
   );
 }
 
-const configurations = [extensionConfig, reactConfig, reactPopConfig];
+const configurations = [coreConfig, contentConfig, popupConfig];
 
 const generateConfig = (configurations) => {
   return configurations.map((config) => ({

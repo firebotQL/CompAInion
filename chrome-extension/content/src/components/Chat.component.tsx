@@ -18,6 +18,7 @@ import { ConversationArea } from "./ChatMessageArea.component";
 function Chat() {
   const [serverUrl, setServerUrl] = useState("");
   const [authorizationHeader, setAuthHeader] = useState("");
+  const [notification, setNotification] = useState("");
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -27,6 +28,21 @@ function Chat() {
   });
 
   useEffect(() => {
+    // Function to handle changes in chrome storage
+    const handleChange = (changes: {
+      [key: string]: chrome.storage.StorageChange;
+    }) => {
+      if (changes["compainion-serverUrl"] || changes["compainion-authHeader"]) {
+        if (changes["compainion-serverUrl"]) {
+          setServerUrl(changes["compainion-serverUrl"].newValue);
+        }
+        if (changes["compainion-authHeader"]) {
+          setAuthHeader(changes["compainion-authHeader"].newValue);
+        }
+      }
+    };
+
+    // Get initial value from chrome storage
     chrome.storage.sync.get(
       ["compainion-serverUrl", "compainion-authHeader"],
       (result) => {
@@ -38,12 +54,26 @@ function Chat() {
         }
       }
     );
+
+    // Add event listener for chrome storage changes
+    chrome.storage.onChanged.addListener(handleChange);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      chrome.storage.onChanged.removeListener(handleChange);
+    };
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: serverUrl,
     headers: { Authorization: authorizationHeader },
+    onError: (error) => {
+      console.log(error);
+      setNotification(
+        "Please check if your server is alive or url is correct. For more error information, please check the console."
+      );
+    },
   });
 
   // user/assistant
@@ -74,6 +104,9 @@ function Chat() {
             {messages?.length > 0
               ? "Chat history: "
               : "Please feel free to ask me anything!"}
+            {notification && (
+              <p className="mt-4 text-red-500">{notification}</p>
+            )}
           </SheetDescription>
         </SheetHeader>
         {messages?.length > 0 && <ConversationArea messages={messages} />}

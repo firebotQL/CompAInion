@@ -1,8 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["./ui-popup/src/**/*.{ts,tsx}"],
-  purge: [],
+  content: ["./chrome-extension/popup/src/**/*.{ts,tsx}"],
   theme: {
     extend: {},
   },
