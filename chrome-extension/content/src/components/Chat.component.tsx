@@ -39,6 +39,8 @@ function Chat() {
         if (changes["compainion-authHeader"]) {
           setAuthHeader(changes["compainion-authHeader"].newValue);
         }
+        console.log("Setting notification to empty");
+        setNotification("");
       }
     };
 
@@ -71,7 +73,7 @@ function Chat() {
     onError: (error) => {
       console.log(error);
       setNotification(
-        "Please check if your server is alive or url is correct. For more error information, please check the console."
+        "Unable to chat! Check if you specified Server URL/Auth Header correctly in the extension popup. For more error information, please check the console."
       );
     },
   });
@@ -79,11 +81,12 @@ function Chat() {
   // user/assistant
   // TODO:
   // - add a loading indicator for the assistant setIsLoading(true);
-
+  // remove: .border,
+  //
   return (
     <Sheet modal={false}>
       <SheetTrigger asChild>
-        <Button variant="outline" className="ml-4 mb-4 w-8 h-8">
+        <Button variant="default" className="ml-4 mb-4 w-8 h-8">
           <img
             className="h-auto max-w-max rounded-lg" // TODO: Fix height of img as it's clashing with default
             alt="CompAInion"
@@ -105,7 +108,7 @@ function Chat() {
               ? "Chat history: "
               : "Please feel free to ask me anything!"}
             {notification && (
-              <p className="mt-4 text-red-500">{notification}</p>
+              <p className="mt-1 text-red-500">{notification}</p>
             )}
           </SheetDescription>
         </SheetHeader>
