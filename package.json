@@ -1,13 +1,23 @@
 {
   "name": "CompAInion",
-  "version": "alpha-0.0.1",
+  "version": "alpha-0.0.2",
   "description": "A ChatGPT companion chrome extension to interact with the web",
   "author": {
     "name": "Viaceslavas Duk"
   },
+  "private": true,
+  "workspaces": [
+    "chrome-extension/content",
+    "chrome-extension/popup",
+    "backend"
+  ],
   "scripts": {
-    "build": "NODE_ENV=production webpack",
-    "build:dev": "NODE_ENV=development webpack"
+    "build:chrome": "NODE_ENV=production webpack",
+    "build:chrome:dev": "NODE_ENV=development webpack",
+    "build:ui": "yarn workspace ui build",
+    "build:ui-popup": "yarn workspace ui-popup build",
+    "build:backend": "yarn workspace backend build",
+    "build:frontend": "yarn run build:ui && yarn run build:ui-popup"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.239",

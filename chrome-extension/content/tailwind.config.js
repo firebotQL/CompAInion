@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["./ui/components/**/*.{ts,tsx}", "./ui/src/**/*.{ts,tsx}"],
+  content: [
+    "./chrome-extension/content/components/**/*.{ts,tsx}",
+    "./chrome-extension/content/src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,

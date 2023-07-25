@@ -5,13 +5,19 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const mode = process.env.NODE_ENV || "development";
 
+const chromeExtensionDir = "./chrome-extension";
+const enableDevTools = mode === "development";
+
+const additionalConfig = enableDevTools ? { devtool: "inline-source-map" } : {};
+
+const outputDir = path.resolve(__dirname, "dist");
+
 const extensionConfig = {
-  name: "chrome-extension",
+  name: "core",
   mode,
   entry: {
-    // content: "./extension/src/content.ts",
-    background: "./extension/src/background.ts",
-    popup: "./extension/src/popup.ts",
+    background: `${chromeExtensionDir}/core/src/background.ts`,
+    popup: `${chromeExtensionDir}/core/src/popup.ts`,
   },
   module: {
     rules: [
@@ -27,27 +33,30 @@ const extensionConfig = {
   },
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "dist"),
+    path: outputDir,
   },
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "extension/src/manifest.json"),
+          from: path.resolve(
+            __dirname,
+            `${chromeExtensionDir}/core/src/manifest.json`
+          ),
           to: ".", // Relative to the webpack output path
         },
-        { from: "extension/src/popup.html", to: "." },
-        { from: "extension/images", to: "images" },
+        { from: `${chromeExtensionDir}/core/src/popup.html`, to: "." },
+        { from: `${chromeExtensionDir}/core/images`, to: "images" },
       ],
     }),
   ],
 };
 
 const reactConfig = {
-  entry: "./ui/src/index.tsx",
+  entry: `${chromeExtensionDir}/content/src/index.tsx`,
   mode,
-  devtool: "inline-source-map", // TODO: Remove this for production!
+  ...additionalConfig,
   module: {
     rules: [
       {
@@ -89,21 +98,21 @@ const reactConfig = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      "@": path.resolve(__dirname, "ui/"),
+      "@": path.resolve(__dirname, `${chromeExtensionDir}/content/`),
     },
   },
   output: {
     filename: "content.js",
-    path: path.resolve(__dirname, "dist"),
+    path: outputDir,
     publicPath: "",
   },
   plugins: [...getHtmlPlugins(["index"])],
 };
 
 const reactPopConfig = {
-  entry: "./ui-popup/src/index.tsx",
+  entry: `${chromeExtensionDir}/popup/src/index.tsx`,
   mode,
-  devtool: "inline-source-map",
+  ...additionalConfig,
   module: {
     rules: [
       {
@@ -148,17 +157,17 @@ const reactPopConfig = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      "@": path.resolve(__dirname, "ui-popup/"),
+      "@": path.resolve(__dirname, "chrome-extension/popup/"),
     },
   },
   output: {
     filename: "popup.js",
-    path: path.resolve(__dirname, "dist"),
+    path: outputDir,
   },
   plugins: [
     new HTMLPlugin({
       title: "React Popup",
-      template: "./ui-popup/public/index.html", // load the public/index.html file as the template
+      template: `${chromeExtensionDir}/popup/public/index.html`, // load the public/index.html file as the template
       filename: "popup.html", // output HTML in dist folder
       inject: "body", // inject scripts into body
     }),
