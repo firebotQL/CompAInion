@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./chrome-extension/core/images/favicon48.png" alt="Icon Image">
+  <img src="./chrome-extension/core/images/icon48.png" alt="Icon Image">
   <h1>CompAInion: Your ChatGPT Assistant</h1>
 </div>
 
