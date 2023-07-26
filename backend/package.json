@@ -1,5 +1,5 @@
 {
-  "name": "compainion-server",
+  "name": "backend",
   "version": "0.0.2",
   "description": "Proxy layer/server to communicate with ChatGPT API",
   "author": "Viaceslavas Duk",
