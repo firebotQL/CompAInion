@@ -45,6 +45,21 @@ You can deploy your own instance of the backend service by clicking on the "Depl
   </a>
 </p>
 
+If you prefer to deploy manually, here are the steps you need to follow:
+
+1. Clone the repository.
+2. Log in to your Vercel account.
+3. Grant the necessary permissions to access the repository.
+4. Deploy the project by following the instructions shown in the image below:
+
+![Vercel Manual Deployment](./vercel_manual_deployment.png)
+
+After the deployment, your URL will be formatted as follows:
+
+'https://YOUR_PROJECT_NAME.vercel.app/api/chat/route'
+
+Please replace 'YOUR_PROJECT_NAME' with the name you have entered or that was automatically generated as shown in the previous screenshot.
+
 ## Understanding the Project Structure
 
 - `backend`: The deployable Next.js service hosted on Vercel, making use of Edge Functions to handle large response timeouts.
@@ -100,5 +115,6 @@ Here are some tasks/todos on my radar that you might be interested in:
 6. Adding a dark mode.
 7. Introducting authentication to support task 3.
 8. Fix if any website waits on the input when modal is open/popped up it should disable all other inputs on the page.
+9. Figure out how to deploy to vercel also needs to include node_modules in the build while deploying.
 
 Feel free to tackle any of these tasks and submit a pull request. Or raise any feedback in the issues section. I appreciate your collaboration!
