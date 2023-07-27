@@ -3,9 +3,9 @@
   <h1>CompAInion: Your ChatGPT Assistant</h1>
 </div>
 
-Welcome to CompAInion - your chatgpt sidebar assistant. This is my first time making something like this, and I built it because I wanted a tool that could integrate ChatGPT into my day-to-day browsing. It's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT just like you're texting a friend.
+Welcome to CompAInion - your chatgpt sidebar assistant. This is my first time making something like this. Main motivation for me why I built it is because I wanted a tool that could integrate ChatGPT into my day-to-day browsing without context switching. Basically it's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT. The area where you chat opens as a sidebar, so it doesn't interrupt your browsing.
 
-One cool feature is that you can select any text on a webpage, and it will be injected directly into your text chat area. It saves you from having to copy and paste. Plus, the chat main feature is to be opened/closed as a sidebar, so it doesn't interrupt your browsing.
+One cool feature is that you can select any text on a webpage, and 'Use' it to be injected directly into your text chat area. It saves you from having to copy and paste so you can continue your chat using that selected text.
 
 To build the extension, I used a mix of tech, including React and TailwindCSS for the front end, and Next.js and Vercel AI SDK for the backend. The backend is deployed to Vercel, which was the only way I found to get around a 10-second timeout limitation.
 
@@ -24,6 +24,7 @@ I hope you find CompAInion helpful in your day-to-day browsing. It's still a wor
 - [Installing and Using the Chrome Extension](#installing-and-using-the-chrome-extension)
   - [Preparing Your Project](#preparing-your-project)
   - [Installing the Extension in Chrome](#installing-the-extension-in-chrome)
+  - [Using the Extension in Chrome](#using-the-extension-in-chrome)
 - [Known Limitations](#known-limitations)
 - [Upcoming Tasks/Todos/WIP](#upcoming-taskstodoswip)
 - [Contributing to CompAInion](#contributing-to-compainion)
@@ -73,6 +74,7 @@ This process involves two key steps:
 
 1. **Preparing Your Project**
 2. **Installing the Extension in Chrome**
+3. **Using the Extension in Chrome**
 
 ### Preparing Your Project
 
@@ -90,6 +92,14 @@ This action will create a `dist` folder, essentially it's where a fully build Ch
 
 2. Click the 'Load unpacked' button and navigate to the `dist` folder in your project directory, which was created in the previous step. Click 'Select' and your Chrome Extension should now be installed and ready for use.
 
+### Using the Extension in Chrome
+
+After you get it installed you will see the CompAInion logo in your extensions bar, click on it and you will see a popup window asking you to enter your server URL and password. Enter the URL of your deployed backend service and the password you set in the environment variables. Click 'Save' and you should be good to go!
+
+You will also see CompAInion icon on the left bottom side to open chat area/sidebar. Click on it and you will see a chat area/sidebar. You can start chatting with the AI by typing in the chat area.
+
+You can also select any text on any webpage and click on the button that appears to the right of the selected text. This will inject the selected text into your chat area/sidebar. You can then continue your chat using that selected text.
+
 ## Known Limitations
 
 - Only supports ChatGPT 3.5 model.
@@ -101,9 +111,9 @@ This action will create a `dist` folder, essentially it's where a fully build Ch
 
 Here are some tasks/todos on my radar (in priority order):
 
-1. Isolating CSS from the extension and the domain. As there is a bleed between current webpages and chrome extension atm. (Looking into complete a shadow-dom solution)
-2. Fix on any website. If keyboard inputs listened on for any input box or etc, we should disable them when the sidebar/modal for the CompAInion is open/active.
-3. Enhancing select text/content menu with more options like: summarizing, explaining in layman terms, rewriting/simplifying and etc.
+1. Separate the CSS of the extension and the website. Currently, there's an overlap between the webpage's CSS and the extension's CSS. I am considering using a Shadow DOM + Twind solution to solve this, but there are some challenges to overcome.
+2. Address this issue across all websites: if any input boxes or similar elements are actively listening for keyboard inputs, we should disable these when the CompAInion sidebar or modal window is open and active.
+3. Expand the functionality of the text selection/context menu. In addition to including selected text in your chat, introduce more options such as summarizing, explaining in simpler terms, rewriting for better understanding and etc. Any ideas are welcome!
 4. Enabling the selection of different ChatGPT models (not restricted to 3.5).
 5. Enabling users to save and load chat history.
    - 5.a. An option to switch between global or tab/website-specific history.
