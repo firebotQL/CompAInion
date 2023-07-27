@@ -31,11 +31,11 @@ I hope you find CompAInion helpful in your day-to-day browsing. It's still a wor
 
 ## Getting Started
 
-To make use of this extension, first ensure you have a ChatGPT API Key. If you don't have one, follow the instructions provided [here](https://beta.openai.com/docs/developer-quickstart/) to acquire it.
+To make use of this extension, first ensure you have a ChatGPT API Key. If you don't have one, follow the provided [link](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key) to acquire it.
 
 ## Deploying the Backend Service
 
-You can deploy your own instance of the backend service by clicking on the "Deploy to Vercel" button. Make sure to set the following environment variables:
+Now when you've got your API key you can deploy your own instance of the backend service by clicking on the "Deploy to Vercel" button shown below. Make sure to set the following environment variables:
 
 - `PASSWORD`: Protects the endpoint, and is sent as an Authorization Header from the Chrome extension.
 - `OPENAI_API_KEY`: Your unique ChatGPT API Key.
@@ -46,7 +46,7 @@ You can deploy your own instance of the backend service by clicking on the "Depl
   </a>
 </p>
 
-If you prefer to deploy manually, here are the steps you need to follow:
+Or if you prefer to deploy it manually, here are the steps you will need to follow:
 
 1. Fork the repository to your Github account.
 2. Log in to your Vercel account.
@@ -59,7 +59,7 @@ After the deployment, your 'Servel URL' will be in a such format:
 
 'https://YOUR_PROJECT_NAME.vercel.app/api/chat/route'
 
-Please replace 'YOUR_PROJECT_NAME' with the name you have entered or that was automatically generated as shown in the previous screenshot.
+Please replace 'YOUR_PROJECT_NAME' with the name you have entered or that was automatically generated as shown in the previous screenshot. Save above url so we can use it later on to setup chrome extension.
 
 ## Understanding the Project Structure
 
