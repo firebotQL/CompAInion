@@ -3,15 +3,15 @@
   <h1>CompAInion: Your ChatGPT Assistant</h1>
 </div>
 
-Welcome to CompAInion, my contribution to the open-source community. This project is a practical implementation of a Chrome Extension, designed to seamlessly integrate ChatGPT into your day-to-day browsing experience.
+Welcome to CompAInion - your chatgpt sidebar assistant. This is my first time making something like this, and I built it because I wanted a tool that could integrate ChatGPT into my day-to-day browsing. It's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT just like you're texting a friend.
 
-The main feature of CompAInion is its intuitive chat interface that allows you to converse with ChatGPT in a manner as natural as chatting with a friend. The experience is further enriched with an additional feature that enables you to select any text on a webpage, which can then be directly included in your chat discussion via a context menu. This feature alleviates the need for manual copy-pasting and provides a seamless flow to your interactions.
+One cool feature is that you can select any text on a webpage, and it will be injected directly into your text chat area. It saves you from having to copy and paste. Plus, the chat main feature is to be opened/closed as a sidebar, so it doesn't interrupt your browsing.
 
-On the front end I used React + TailwindCSS + ShadeCN + Twind + Shadow Dom to build the UI with some chrome extension specific code.
+To build the extension, I used a mix of tech, including React and TailwindCSS for the front end, and Next.js and Vercel AI SDK for the backend. The backend is deployed to Vercel, which was the only way I found to get around a 10-second timeout limitation.
 
-On the backend, I decided to use Next.js + Edge Functions + Vercel AI SDK to build API which can be deployed to Vercel. This was the only solution with which I could overcome 10s timeout on Vercel as it's uses streaming and longer responses could be streamed back for longer than that.
+There are some alternatives out there like Monica, Sider.ai, and GPTPlus. But they're not completely free. In contrast, you can use CompAInion unlimited for free if you have a valid OpenAI ChatGPT API key.
 
-I hope CompAInion proves to be a useful tool in your browsing toolkit, enhancing your interactions and experiences online.
+I hope you find CompAInion helpful in your day-to-day browsing. It's still a work in progress, and I'm looking forward to making it even better!
 
 **NOTE: Project is still in early stages, and many bugs needs weeding out, feel free to see some of them on the very bottom of this readme**
 
@@ -25,8 +25,8 @@ I hope CompAInion proves to be a useful tool in your browsing toolkit, enhancing
   - [Preparing Your Project](#preparing-your-project)
   - [Installing the Extension in Chrome](#installing-the-extension-in-chrome)
 - [Known Limitations](#known-limitations)
+- [Upcoming Tasks/Todos/WIP](#upcoming-taskstodoswip)
 - [Contributing to CompAInion](#contributing-to-compainion)
-- [Upcoming Tasks/Todos](#upcoming-taskstodos)
 
 ## Getting Started
 
@@ -44,6 +44,21 @@ You can deploy your own instance of the backend service by clicking on the "Depl
     <img src="https://vercel.com/button" alt="Deploy with Vercel">
   </a>
 </p>
+
+If you prefer to deploy manually, here are the steps you need to follow:
+
+1. Fork the repository to your Github account.
+2. Log in to your Vercel account.
+3. Grant the necessary permissions to access the repository from your Github account.
+4. Deploy the project by following the settings shown in the image below:
+
+![Vercel Manual Deployment](./vercel_manual_deployment.png)
+
+After the deployment, your 'Servel URL' will be in a such format:
+
+'https://YOUR_PROJECT_NAME.vercel.app/api/chat/route'
+
+Please replace 'YOUR_PROJECT_NAME' with the name you have entered or that was automatically generated as shown in the previous screenshot.
 
 ## Understanding the Project Structure
 
@@ -67,7 +82,7 @@ This process involves two key steps:
    yarn install && yarn build:chrome
    ```
 
-This action will create a `dist` folder, essential for the Chrome Extension.
+This action will create a `dist` folder, essentially it's where a fully build Chrome Extension will reside after running above commands.
 
 ### Installing the Extension in Chrome
 
@@ -82,23 +97,21 @@ This action will create a `dist` folder, essential for the Chrome Extension.
 - Lacks an option for selecting predefined prompt templates.
 - Does not have a dark mode available.
 
-## Contributing to CompAInion
+## Upcoming Tasks/Todos/WIP
 
-Your contributions are invaluable to us! We welcome bug reports, feature requests, and pull requests to help us improve CompAInion.
-
-## Upcoming Tasks/Todos
-
-Here are some tasks/todos on my radar that you might be interested in:
+Here are some tasks/todos on my radar (in priority order):
 
 1. Isolating CSS from the extension and the domain. As there is a bleed between current webpages and chrome extension atm. (Looking into complete a shadow-dom solution)
-2. Enabling the selection of different ChatGPT models (not restricted to 3.5).
-3. Implementing a feature to save and load chat history.
-   - 3.a. An option to switch between global or tab/website-specific history.
-4. Introducing features like summarizing, explaining in layman terms, and more for selected text/context menu.
-5. Providing an option to select predefined prompt templates.
-   - 5.a. An option to manually create or upload prompt templates.
-6. Adding a dark mode.
-7. Introducting authentication to support task 3.
-8. Fix if any website waits on the input when modal is open/popped up it should disable all other inputs on the page.
+2. Fix on any website. If keyboard inputs listened on for any input box or etc, we should disable them when the sidebar/modal for the CompAInion is open/active.
+3. Enhancing select text/content menu with more options like: summarizing, explaining in layman terms, rewriting/simplifying and etc.
+4. Enabling the selection of different ChatGPT models (not restricted to 3.5).
+5. Enabling users to save and load chat history.
+   - 5.a. An option to switch between global or tab/website-specific history.
+6. Providing an option to select predefined prompt templates.
+   - 6.a. An option to manually create or upload prompt templates.
+7. Adding a dark mode.
+8. Introducting authentication to support task 5.
 
-Feel free to tackle any of these tasks and submit a pull request. Or raise any feedback in the issues section. I appreciate your collaboration!
+## Contributing to CompAInion
+
+Your contributions are invaluable to me! I welcome bug reports, feature requests, and pull requests to help to improve CompAInion. I appreciate your collaboration!
