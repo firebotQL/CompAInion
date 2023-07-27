@@ -3,9 +3,9 @@
   <h1>CompAInion: Your ChatGPT Assistant</h1>
 </div>
 
-Welcome to CompAInion - your chatgpt sidebar assistant. This is my first time making something like this, and I built it because I wanted a tool that could integrate ChatGPT into my day-to-day browsing. It's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT just like you're texting a friend.
+Welcome to CompAInion - your chatgpt sidebar assistant. This is my first time making something like this. Main motivation for me why I built it is because I wanted a tool that could integrate ChatGPT into my day-to-day browsing without context switching. Basically it's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT. The area where you chat opens as a sidebar, so it doesn't interrupt your browsing.
 
-One cool feature is that you can select any text on a webpage, and it will be injected directly into your text chat area. It saves you from having to copy and paste. Plus, the chat main feature is to be opened/closed as a sidebar, so it doesn't interrupt your browsing.
+One cool feature is that you can select any text on a webpage, and 'Use' it to be injected directly into your text chat area. It saves you from having to copy and paste so you can continue your chat using that selected text.
 
 To build the extension, I used a mix of tech, including React and TailwindCSS for the front end, and Next.js and Vercel AI SDK for the backend. The backend is deployed to Vercel, which was the only way I found to get around a 10-second timeout limitation.
 
