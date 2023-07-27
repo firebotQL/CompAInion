@@ -78,6 +78,8 @@ This process involves two key steps:
 
 ### Preparing Your Project
 
+**Prerequisite:** Before running below commands you will need to have [Node.js](https://nodejs.org/en/) installed on your machine version above 18. And also package manager [yarn](https://classic.yarnpkg.com/en/docs/install) installed.
+
 1. Navigate to your project's root directory and execute the following command to install the necessary dependencies and build the Chrome extension:
 
    ```
