@@ -24,6 +24,7 @@ I hope you find CompAInion helpful in your day-to-day browsing. It's still a wor
 - [Installing and Using the Chrome Extension](#installing-and-using-the-chrome-extension)
   - [Preparing Your Project](#preparing-your-project)
   - [Installing the Extension in Chrome](#installing-the-extension-in-chrome)
+  - [Using the Extension in Chrome](#using-the-extension-in-chrome)
 - [Known Limitations](#known-limitations)
 - [Upcoming Tasks/Todos/WIP](#upcoming-taskstodoswip)
 - [Contributing to CompAInion](#contributing-to-compainion)
@@ -73,6 +74,7 @@ This process involves two key steps:
 
 1. **Preparing Your Project**
 2. **Installing the Extension in Chrome**
+3. **Using the Extension in Chrome**
 
 ### Preparing Your Project
 
@@ -89,6 +91,14 @@ This action will create a `dist` folder, essentially it's where a fully build Ch
 1. Open Chrome and navigate to `chrome://extensions/`. Enable 'Developer mode' from the top right corner.
 
 2. Click the 'Load unpacked' button and navigate to the `dist` folder in your project directory, which was created in the previous step. Click 'Select' and your Chrome Extension should now be installed and ready for use.
+
+### Using the Extension in Chrome
+
+After you get it installed you will see the CompAInion logo in your extensions bar, click on it and you will see a popup window asking you to enter your server URL and password. Enter the URL of your deployed backend service and the password you set in the environment variables. Click 'Save' and you should be good to go!
+
+You will also see CompAInion icon on the left bottom side to open chat area/sidebar. Click on it and you will see a chat area/sidebar. You can start chatting with the AI by typing in the chat area.
+
+You can also select any text on any webpage and click on the button that appears to the right of the selected text. This will inject the selected text into your chat area/sidebar. You can then continue your chat using that selected text.
 
 ## Known Limitations
 
