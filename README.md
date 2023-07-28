@@ -114,7 +114,7 @@ You can also select any text on any webpage and click on the button that appears
 Here are some tasks/todos on my radar (in priority order):
 
 1. Separate the CSS of the extension and the website. Currently, there's an overlap between the webpage's CSS and the extension's CSS. I am considering using a Shadow DOM + Twind solution to solve this, but there are some challenges to overcome.
-2. Address this issue across all websites: if any input boxes or similar elements are actively listening for keyboard inputs, we should disable these when the CompAInion sidebar or modal window is open and active.
+2. ~~Address this issue across all websites: if any input boxes or similar elements are actively listening for keyboard inputs, we should disable these when the CompAInion sidebar or modal window is open and active.~~
 3. Expand the functionality of the text selection/context menu. In addition to including selected text in your chat, introduce more options such as summarizing, explaining in simpler terms, rewriting for better understanding and etc. Any ideas are welcome!
 4. Enabling the selection of different ChatGPT models (not restricted to 3.5).
 5. Enabling users to save and load chat history.
