@@ -13,7 +13,7 @@ There are some alternatives out there like Monica, Sider.ai, and GPTPlus. But th
 
 I hope you find CompAInion helpful in your day-to-day browsing. It's still a work in progress, and I'm looking forward to making it even better!
 
-**NOTE: Project is still in early stages, and many bugs needs weeding out, feel free to see some of them on the very bottom of this readme**
+**NOTE: The project is in its early stages and there are several bugs that need attention. You'll find a list of known issues and future enhancements at the end of this README.**
 
 ## Table of Contents
 
