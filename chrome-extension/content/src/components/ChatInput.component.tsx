@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
+import { PaperPlaneIcon, ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
 import { ChatRequestOptions } from "ai";
 import { FC, useEffect, useRef, useState } from "react";
 
@@ -176,7 +176,7 @@ export const ChatInputBox: FC<ChatInputProps> = ({
           disabled={isLoading}
         >
           {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-          Send
+          <PaperPlaneIcon className="mr-2 h-4 w-4" /> Send
         </Button>
         <Button
           onClick={clearMessage}
