@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
+import { PaperPlaneIcon, ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
 import { ChatRequestOptions } from "ai";
 import { FC, useEffect, useRef, useState } from "react";
 
@@ -26,6 +26,32 @@ export const ChatInputBox: FC<ChatInputProps> = ({
 }) => {
   // 4000 characters/tokens?
   const [message, setMessage] = useState<string>("");
+  const [isFocused, setIsFocused] = useState(false);
+  const prevListener = useRef<
+    ((this: Document, ev: KeyboardEvent) => any) | null
+  >(null);
+
+  useEffect(() => {
+    const keydownListener = (e: KeyboardEvent) => {
+      if (isFocused) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+    };
+
+    if (prevListener.current) {
+      document.removeEventListener("keydown", prevListener.current, true);
+    }
+
+    document.addEventListener("keydown", keydownListener, true);
+    prevListener.current = keydownListener;
+
+    // Cleanup on component unmount
+    return () => {
+      document.removeEventListener("keydown", keydownListener, true);
+    };
+  }, [isFocused]);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null); // Create a ref
 
   useEffect(() => {
@@ -130,14 +156,16 @@ export const ChatInputBox: FC<ChatInputProps> = ({
       {!isLoading && (
         <Textarea
           ref={textareaRef}
-          className="flex-grow mr-2"
+          className="flex-grow mr-2 !text-black"
           placeholder="Type your message here."
           value={message}
           onChange={handleInputChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
       )}
       {isLoading && (
-        <Textarea className="flex-grow mr-2" disabled>
+        <Textarea className="flex-grow mr-2 !text-black" disabled>
           Loading...
         </Textarea>
       )}
@@ -148,7 +176,7 @@ export const ChatInputBox: FC<ChatInputProps> = ({
           disabled={isLoading}
         >
           {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-          Send
+          <PaperPlaneIcon className="mr-2 h-4 w-4" /> Send
         </Button>
         <Button
           onClick={clearMessage}
