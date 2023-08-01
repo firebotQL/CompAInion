@@ -3,13 +3,19 @@
   <h1>CompAInion: Your ChatGPT Assistant</h1>
 </div>
 
-Welcome to CompAInion - chrome extension assistant as a sidebar available in all browsing tabs. The main motivation for me why I built it is because I wanted a tool that could integrate ChatGPT into my day-to-day browsing without context switching. Basically, it's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT. The area where you chat opens as a sidebar, so it doesn't interrupt your browsing.
+Welcome to CompAInion - is a free chrome extension assistant as a sidebar available in all browsing tabs. The main motivation for me why I built it is because I wanted a tool that could integrate ChatGPT into my day-to-day browsing without context switching. Basically, it's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT. The area where you chat opens as a sidebar, so it doesn't interrupt your browsing.
 
 One cool feature is that you can select any text on a webpage, and 'Use' it to be injected directly into your text chat area. It saves you from having to copy and paste so you can continue your chat using that selected text.
 
 To build the extension, I used a mix of tech, including React and TailwindCSS for the front end, and Next.js and Vercel AI SDK for the backend. The backend is deployed to Vercel, and using Edge Functions - which was the only way I found how to get around a 10-second timeout Vercel limitation.
 
-There are some alternatives out there like Monica, Sider.ai, and GPTPlus. But they're not completely free. In contrast, you can use CompAInion Unlimited for free if you have a valid OpenAI ChatGPT API key.
+There are some alternatives out there like Monica, Sider.ai, and GPTPlus. But they're not completely free. In contrast:
+<div align="center"><strong>
+:fire::fire::fire:CompAInion is entirely free. Your only limit is tied to your own OpenAI ChatGPT API key.:fire::fire::fire:
+</strong>
+</div>
+</br>
+
 
 I hope you find CompAInion helpful in your day-to-day browsing. It's still a work in progress, and I'm looking forward to making it even better!
 
