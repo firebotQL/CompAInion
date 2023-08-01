@@ -1,6 +1,8 @@
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { Configuration, OpenAIApi } from "openai-edge";
 
+const password = process.env.PASSWORD;
+
 const chatGPTConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY || "",
 });
@@ -12,7 +14,16 @@ export const config = {
 };
 
 export default async function POST(req: Request) {
+  const headers = req.headers;
   const { messages } = await req.json();
+
+  if (headers.get("Authorization") !== password) {
+    console.log("Authorized header is not matching the password.");
+    return {
+      status: 401,
+      body: { error: "Incorrect authorization headers was used." },
+    };
+  }
 
   // Ask OpenAI for a streaming completion given the prompt
   const response = await chatGPTApi.createChatCompletion({
