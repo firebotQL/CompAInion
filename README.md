@@ -48,7 +48,10 @@ To make use of this extension, first, ensure you have a ChatGPT API Key. If you 
 
 ## Deploying the Backend Service
 
-### Automatic Vercel Deployment
+### Automatic Vercel Deployment 
+
+:warning:Currently experiencing issues with the 'Deploy to Vercel' button on GitHub. Please manually clone and deploy the project until resolved.
+
 Now that you've got your API key you can deploy your own instance of the backend service by clicking on the "Deploy to Vercel" button shown below. Make sure to set the following environment variables:
 
 - `PASSWORD`: Protects the endpoint, and is sent as an Authorization Header from the Chrome extension.
