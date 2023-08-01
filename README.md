@@ -38,8 +38,7 @@ I hope you find CompAInion helpful in your day-to-day browsing. It's still a wor
 
 ## Demo
 
-
-https://github.com/firebotQL/CompAInion/assets/78686/9084c30c-604f-4739-aa65-9b9b4dee8ae5
+https://github.com/firebotQL/CompAInion/assets/78686/b3a70c80-867e-49e7-a3a5-4aeea0ae4c54
 
 
 ## Getting Started
