@@ -2,7 +2,7 @@
   "name": "compainion-content",
   "version": "0.0.2",
   "author": "Viaceslavas Duk",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "private": true,
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.4",
