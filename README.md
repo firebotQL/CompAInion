@@ -3,13 +3,13 @@
   <h1>CompAInion: Your ChatGPT Assistant</h1>
 </div>
 
-Welcome to CompAInion - your chatgpt sidebar assistant. This is my first time making something like this. Main motivation for me why I built it is because I wanted a tool that could integrate ChatGPT into my day-to-day browsing without context switching. Basically it's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT. The area where you chat opens as a sidebar, so it doesn't interrupt your browsing.
+Welcome to CompAInion - chrome extension assistant as a sidebar available in all browsing tabs. The main motivation for me why I built it is because I wanted a tool that could integrate ChatGPT into my day-to-day browsing without context switching. Basically, it's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT. The area where you chat opens as a sidebar, so it doesn't interrupt your browsing.
 
 One cool feature is that you can select any text on a webpage, and 'Use' it to be injected directly into your text chat area. It saves you from having to copy and paste so you can continue your chat using that selected text.
 
 To build the extension, I used a mix of tech, including React and TailwindCSS for the front end, and Next.js and Vercel AI SDK for the backend. The backend is deployed to Vercel, and using Edge Functions - which was the only way I found how to get around a 10-second timeout Vercel limitation.
 
-There are some alternatives out there like Monica, Sider.ai, and GPTPlus. But they're not completely free. In contrast, you can use CompAInion unlimited for free if you have a valid OpenAI ChatGPT API key.
+There are some alternatives out there like Monica, Sider.ai, and GPTPlus. But they're not completely free. In contrast, you can use CompAInion Unlimited for free if you have a valid OpenAI ChatGPT API key.
 
 I hope you find CompAInion helpful in your day-to-day browsing. It's still a work in progress, and I'm looking forward to making it even better!
 
@@ -18,6 +18,7 @@ I hope you find CompAInion helpful in your day-to-day browsing. It's still a wor
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
+- [Demo](#demo)
 - [Getting Started](#getting-started)
 - [Deploying the Backend Service](#deploying-the-backend-service)
 - [Understanding the Project Structure](#understanding-the-project-structure)
@@ -29,13 +30,19 @@ I hope you find CompAInion helpful in your day-to-day browsing. It's still a wor
 - [Upcoming Tasks/Todos/WIP](#upcoming-taskstodoswip)
 - [Contributing to CompAInion](#contributing-to-compainion)
 
+## Demo
+
+
+https://github.com/firebotQL/CompAInion/assets/78686/9084c30c-604f-4739-aa65-9b9b4dee8ae5
+
+
 ## Getting Started
 
-To make use of this extension, first ensure you have a ChatGPT API Key. If you don't have one, follow the provided [link](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key) to acquire it.
+To make use of this extension, first, ensure you have a ChatGPT API Key. If you don't have one, follow the provided [link](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key) to acquire it.
 
 ## Deploying the Backend Service
 
-Now when you've got your API key you can deploy your own instance of the backend service by clicking on the "Deploy to Vercel" button shown below. Make sure to set the following environment variables:
+Now that you've got your API key you can deploy your own instance of the backend service by clicking on the "Deploy to Vercel" button shown below. Make sure to set the following environment variables:
 
 - `PASSWORD`: Protects the endpoint, and is sent as an Authorization Header from the Chrome extension.
 - `OPENAI_API_KEY`: Your unique ChatGPT API Key.
@@ -50,12 +57,12 @@ Or if you prefer to deploy it manually, here are the steps you will need to foll
 
 1. Fork the repository to your Github account.
 2. Log in to your Vercel account.
-3. Grant the necessary permissions to access the repository from your Github account.
+3. Grant the necessary permissions to access the repository from your GitHub account.
 4. Deploy the project by following the settings shown in the image below:
 
 ![Vercel Manual Deployment](./vercel_manual_deployment.png)
 
-After the deployment, your 'Servel URL' will be in a such format:
+After the deployment, your 'Servel URL' will be in such format:
 
 'https://YOUR_PROJECT_NAME.vercel.app/api/chat/route'
 
@@ -78,7 +85,7 @@ This process involves two key steps:
 
 ### Preparing Your Project
 
-**Prerequisite:** Before running below commands you will need to have [Node.js](https://nodejs.org/en/) installed on your machine version above 18. And also package manager [yarn](https://classic.yarnpkg.com/en/docs/install) installed.
+**Prerequisite:** Before running the below commands you will need to have [Node.js](https://nodejs.org/en/) installed on your machine version above 18. And also package manager [yarn](https://classic.yarnpkg.com/en/docs/install) installed.
 
 1. Navigate to your project's root directory and execute the following command to install the necessary dependencies and build the Chrome extension:
 
@@ -86,7 +93,7 @@ This process involves two key steps:
    yarn install && yarn build:chrome
    ```
 
-This action will create a `dist` folder, essentially it's where a fully build Chrome Extension will reside after running above commands.
+This action will create a `dist` folder, essentially it's where a fully build Chrome Extension will reside after running the above commands.
 
 ### Installing the Extension in Chrome
 
@@ -98,7 +105,7 @@ This action will create a `dist` folder, essentially it's where a fully build Ch
 
 After you get it installed you will see the CompAInion logo in your extensions bar, click on it and you will see a popup window asking you to enter your server URL and password. Enter the URL of your deployed backend service and the password you set in the environment variables. Click 'Save' and you should be good to go!
 
-You will also see CompAInion icon on the left bottom side to open chat area/sidebar. Click on it and you will see a chat area/sidebar. You can start chatting with the AI by typing in the chat area.
+You will also see CompAInion icon on the left bottom side to open the chat area/sidebar. Click on it and you will see a chat area/sidebar. You can start chatting with the AI by typing in the chat area.
 
 You can also select any text on any webpage and click on the button that appears to the right of the selected text. This will inject the selected text into your chat area/sidebar. You can then continue your chat using that selected text.
 
