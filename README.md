@@ -27,11 +27,11 @@ I hope you find CompAInion helpful in your day-to-day browsing. It's still a wor
 - [Demo](#demo)
 - [Getting Started](#getting-started)
 - [Deploying the Backend Service](#deploying-the-backend-service)
-- [Understanding the Project Structure](#understanding-the-project-structure)
 - [Installing and Using the Chrome Extension](#installing-and-using-the-chrome-extension)
   - [Preparing Your Project](#preparing-your-project)
   - [Installing the Extension in Chrome](#installing-the-extension-in-chrome)
   - [Using the Extension in Chrome](#using-the-extension-in-chrome)
+- [Understanding the Project Structure](#understanding-the-project-structure)
 - [Known Limitations](#known-limitations)
 - [Upcoming Tasks/Todos/WIP](#upcoming-taskstodoswip)
 - [Contributing to CompAInion](#contributing-to-compainion)
@@ -48,6 +48,7 @@ To make use of this extension, first, ensure you have a ChatGPT API Key. If you 
 
 ## Deploying the Backend Service
 
+### Automatic Vercel Deployment
 Now that you've got your API key you can deploy your own instance of the backend service by clicking on the "Deploy to Vercel" button shown below. Make sure to set the following environment variables:
 
 - `PASSWORD`: Protects the endpoint, and is sent as an Authorization Header from the Chrome extension.
@@ -59,6 +60,7 @@ Now that you've got your API key you can deploy your own instance of the backend
   </a>
 </p>
 
+### Manual Vercel Deployment
 Or if you prefer to deploy it manually, here are the steps you will need to follow:
 
 1. Fork the repository to your Github account.
@@ -73,13 +75,6 @@ After the deployment, your 'Servel URL' will be in such format:
 'https://YOUR_PROJECT_NAME.vercel.app/api/chat/route'
 
 Please replace 'YOUR_PROJECT_NAME' with the name you have entered or that was automatically generated as shown in the previous screenshot. Save above url so we can use it later on to setup chrome extension.
-
-## Understanding the Project Structure
-
-- `backend`: The deployable Next.js service hosted on Vercel, making use of Edge Functions to handle large response timeouts.
-- `chrome-extension/core`: Houses the core files for the Chrome extension, including the `manifest.json` configuration.
-- `chrome-extension/content`: A React app utilizing Tailwind and ShadeCN for chat functionalities and a context menu for text selection on loaded pages.
-- `chrome-extension/popup`: Provides a popup for configuring your server URL and authorization password. These should originate from the deployed 'backend' instance.
 
 ## Installing and Using the Chrome Extension
 
@@ -115,9 +110,16 @@ You will also see CompAInion icon on the left bottom side to open the chat area/
 
 You can also select any text on any webpage and click on the button that appears to the right of the selected text. This will inject the selected text into your chat area/sidebar. You can then continue your chat using that selected text.
 
+## Understanding the Project Structure
+
+- `backend`: The deployable Next.js service hosted on Vercel, making use of Edge Functions to handle large response timeouts.
+- `chrome-extension/core`: Houses the core files for the Chrome extension, including the `manifest.json` configuration.
+- `chrome-extension/content`: A React app utilizing Tailwind and ShadeCN for chat functionalities and a context menu for text selection on loaded pages.
+- `chrome-extension/popup`: Provides a popup for configuring your server URL and authorization password. These should originate from the deployed 'backend' instance.
+
 ## Known Limitations
 
-- Only supports ChatGPT 3.5 model.
+- Currently only supports ChatGPT 3.5 model.
 - Does not provide an option to preserve or load chat history.
 - Lacks an option for selecting predefined prompt templates.
 - Does not have a dark mode available.
