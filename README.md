@@ -1,6 +1,6 @@
 <div align="center">
   <img src="./chrome-extension/core/images/icon48.png" alt="Icon Image">
-  <h1>CompAInion: Your ChatGPT Assistant</h1>
+  <h1>CompAInion: Your ChatGPT Sidebar Assistant</h1>
 </div>
 
 Welcome to CompAInion - is a free chrome extension assistant as a sidebar available in all browsing tabs. The main motivation for me why I built it is because I wanted a tool that could integrate ChatGPT into my day-to-day browsing without context switching. Basically, it's a Chrome Extension that adds a chat interface to your browser, which you can use to talk with ChatGPT. The area where you chat opens as a sidebar, so it doesn't interrupt your browsing.
@@ -9,7 +9,7 @@ One cool feature is that you can select any text on a webpage, and 'Use' it to b
 
 To build the extension, I used a mix of tech, including React and TailwindCSS for the front end, and Next.js and Vercel AI SDK for the backend. The backend is deployed to Vercel, and using Edge Functions - which was the only way I found how to get around a 10-second timeout Vercel limitation.
 
-There are some alternatives out there like Monica, Sider.ai, and GPTPlus. But they're not completely free. In contrast:
+There are some alternatives out there like [Monica](https://monica.im/pricing), [Sider.ai](https://sider.ai/pricing), and [GPTPlus](https://gptplus.io/en) . But they're not completely free. In contrast:
 <div align="center"><strong>
 :fire::fire::fire:CompAInion is entirely free. Your only limit is tied to your own OpenAI ChatGPT API key.:fire::fire::fire:
 </strong>
