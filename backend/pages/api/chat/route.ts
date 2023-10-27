@@ -27,7 +27,7 @@ export default async function POST(req: Request) {
 
   // Ask OpenAI for a streaming completion given the prompt
   const response = await chatGPTApi.createChatCompletion({
-    model: "gpt-3.5-turbo",
+    model: "gpt-4",
     // model: "gpt-4", https://help.openai.com/en/articles/7102672-how-can-i-access-gpt-4
     stream: true,
     messages,
